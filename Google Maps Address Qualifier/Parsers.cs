@@ -12,7 +12,7 @@ namespace Google_Maps_Address_Qualifier
     class Parsers
     {
 
-        private List<Result> CheckAddress(string address)
+        public static List<Result> CheckAddress(string address)
         {
             List<Result> output = new List<Result>();
 

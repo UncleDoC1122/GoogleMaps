@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace Google_Maps_Address_Qualifier
 {
@@ -161,10 +162,48 @@ namespace Google_Maps_Address_Qualifier
             }
         }
 
-        private void SaveToXlsShort(List<Result> input, List<string> original, string cellIndex, string cellRegion, string cellCity,
-                               string cellStreet, string cellHouse, string cellApp, string cellFull, string cellIsFound)
+        private void SaveToXlsShort(List<Result> input, List<string> original)
         {
+            Excel.Application ExcelApp;
+            ExcelApp = new Excel.Application();
+            ExcelApp.Visible = true;
+            ExcelApp.SheetsInNewWorkbook = 1;
+            ExcelApp.Workbooks.Add(Type.Missing);
 
+            Excel.Workbooks WorkBooks = ExcelApp.Workbooks;
+            Excel.Workbook Workbook = WorkBooks[1];
+            Excel.Sheets ExcelSheets = Workbook.Worksheets;
+            Excel.Worksheet CurrentSheet = (Excel.Worksheet)ExcelSheets.get_Item(1);
+
+            Excel.Range cell;
+            cell = CurrentSheet.get_Range("A1", Type.Missing);
+
+            cell.Value2 = "INTCODE";
+            cell.get_Offset(0, 1);
+
+            cell.Value2 = "ORIGINAL";
+            cell.get_Offset(0, 1);
+
+            cell.Value2 = "INDEX";
+            cell.get_Offset(0, 1);
+
+            cell.Value2 = "REGION";
+            cell.get_Offset(0, 1);
+
+            cell.Value2 = "CITY";
+            cell.get_Offset(0, 1);
+
+            cell.Value2 = "STREET";
+            cell.get_Offset(0, 1);
+
+            cell.Value2 = "HOUSE";
+            cell.get_Offset(0, 1);
+
+            cell.Value2 = "APARTMENT";
+            cell.get_Offset(0, 1);
+
+            cell.Value2 = "FULLADDRESS";
+            cell.get_Offset(0, 1);
         }
 
         private void SaveToXmlFull(List<Result> input, List<List<string>> original, List<string> headers, string path)
@@ -176,7 +215,7 @@ namespace Google_Maps_Address_Qualifier
             Writer.Close();
             Doc.Load(path);
             int i = 0;
-            
+
 
             foreach (var element in input)
             {
@@ -185,7 +224,7 @@ namespace Google_Maps_Address_Qualifier
                     XmlNode Element = Doc.CreateElement("BusinessPartner");
                     Doc.DocumentElement.AppendChild(Element);
 
-                    for (int j = 0; j < original[i].Count; j++) 
+                    for (int j = 0; j < original[i].Count; j++)
                     {
                         XmlNode Original = Doc.CreateElement(headers[j]);
                         Original.InnerText = original[i][j];
@@ -310,7 +349,7 @@ namespace Google_Maps_Address_Qualifier
                         }
                     }
 
-                   
+
 
 
 
@@ -328,6 +367,12 @@ namespace Google_Maps_Address_Qualifier
                 }
             }
         }
+
+        private void SaveToXlsFull(List<Result> input, List<List<string>> original, List<string> headers)
+        {
+
+        }
+
 
     }
 }

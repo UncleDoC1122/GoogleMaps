@@ -11,6 +11,7 @@ using Google.Maps.Geocoding;
 using Google.Maps.StaticMaps;
 using Google.Maps;
 using System.Xml;
+using Google_Maps_Address_Qualifier;
 
 namespace SerialParser
 {
@@ -38,7 +39,7 @@ namespace SerialParser
             {
                 if (MessageBox.Show("Вы точно хотите сохранять в стандартную директорию?", "Предупреждение", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
                 {
-
+                    textBox1.Text = Parsers.CheckAddress(textBox1.Text)[0].FormattedAddress;
                 }
                 else
                 {
